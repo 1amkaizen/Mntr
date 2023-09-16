@@ -12,8 +12,7 @@ import (
 func displayData(w http.ResponseWriter, r *http.Request) {
 // Baca konfigurasi dari environment variables
 // Konfigurasi koneksi ke database
-	dsn := "root:MR8MPoeiVJdHcaDrsVjF@tcp(containers-us-west-150.railway.app:5616)/railway"
- 
+	dsn := "root:5YUTSCHvx0yXwcsJUQFW@tcp(containers-us-west-139.railway.app:6522)/railway" 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
