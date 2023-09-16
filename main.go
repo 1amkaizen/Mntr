@@ -1,16 +1,30 @@
 package main
 
 import (
-    "fmt"
-    "html/template"
-    "net/http"
-  "github.com/1amkaizen/telegoGPT/models"
+	"html/template"
+	"net/http"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+
+	"github.com/1amkaizen/telegoGPT/models"
 )
 
 func displayData(w http.ResponseWriter, r *http.Request) {
-	// Ambil data dari database
+	// Menghubungkan ke database
+// Konfigurasi koneksi ke database
+	dsn := "root:MR8MPoeiVJdHcaDrsVjF@tcp(containers-us-west-150.railway.app:5616)/railway"
+
+  
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Mengambil data dari database
 	var messages []models.Messages
-	models.DB.Find(&messages)
+	db.Find(&messages)
 
 	tmpl := `
 	<!DOCTYPE html>
@@ -45,6 +59,5 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", displayData)
-	fmt.Println("Server started at :8080")
 	http.ListenAndServe(":8080", nil)
 }
