@@ -14,10 +14,14 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 // Konfigurasi koneksi ke database
 	dsn := "root:5YUTSCHvx0yXwcsJUQFW@tcp(containers-us-west-139.railway.app:6522)/railway" 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+if err != nil {
+    log.Fatal("Failed to connect to database:", err)
+}
+defer db.Close()
+
+log.Println("Connected to database!")
+log.Println("Messages from database:", messages)
+
 
 	// Mengambil data dari database
 		// Mengambil data dari database
