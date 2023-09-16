@@ -3,8 +3,7 @@ package main
 import (
 	"html/template"
 	"net/http"
-        "os" 
-	"fmt" 
+        
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
