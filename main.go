@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-
+	"log" 
 	"github.com/1amkaizen/telegoGPT/models"
 )
 
@@ -20,14 +20,14 @@ if err != nil {
 defer db.Close()
 
 log.Println("Connected to database!")
-log.Println("Messages from database:", messages)
+
 
 
 	// Mengambil data dari database
 		// Mengambil data dari database
 	var messages []models.Messages
 	db.Find(&messages)
-
+log.Println("Messages from database:", messages)
 	// Membaca konten dari file index.html
 	tmpl, err := template.ParseFiles("index.html")
 	if err != nil {
@@ -46,4 +46,5 @@ log.Println("Messages from database:", messages)
 func main() {
 	http.HandleFunc("/", displayData)
 	http.ListenAndServe(":6522", nil)
+	
 }
