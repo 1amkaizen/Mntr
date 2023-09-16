@@ -41,5 +41,5 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", displayData)
-	http.ListenAndServe(":5616", nil)
+	http.ListenAndServe(":6522", nil)
 }
