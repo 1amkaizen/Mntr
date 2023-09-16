@@ -3,7 +3,6 @@ package main
 import (
 	"html/template"
 	"net/http"
-        
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
@@ -11,13 +10,10 @@ import (
 )
 
 func displayData(w http.ResponseWriter, r *http.Request) {
-	// Menghubungkan ke database
+// Baca konfigurasi dari environment variables
 // Konfigurasi koneksi ke database
-	// Baca konfigurasi dari environment variables
-    // Konfigurasi koneksi ke database
 	dsn := "root:MR8MPoeiVJdHcaDrsVjF@tcp(containers-us-west-150.railway.app:5616)/railway"
-
-  
+ 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -25,38 +21,23 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Mengambil data dari database
+		// Mengambil data dari database
 	var messages []models.Messages
 	db.Find(&messages)
 
-	tmpl := `
-	<!DOCTYPE html>
-	<html>
-	<head>
-		<title>Data from Database</title>
-	</head>
-	<body>
-		<h1>Data from Database</h1>
-		<ul>
-			{{range .}}
-			<li>
-				ID: {{.Id}}, Message ID: {{.MessageID}}, User ID: {{.UserID}}, Message: {{.Message}}, Reply: {{.Reply}}, Created At: {{.CreatedAt}}
-			</li>
-			{{end}}
-		</ul>
-	</body>
-	</html>`
-
-	t, err := template.New("webpage").Parse(tmpl)
+	// Membaca konten dari file index.html
+	tmpl, err := template.ParseFiles("index.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = t.Execute(w, messages)
+	err = tmpl.Execute(w, messages)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	
 }
 
 func main() {
