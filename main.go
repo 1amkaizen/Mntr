@@ -15,14 +15,8 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 	// Menghubungkan ke database
 // Konfigurasi koneksi ke database
 	// Baca konfigurasi dari environment variables
-    username := os.Getenv("DB_USERNAME")
-    password := os.Getenv("DB_PASSWORD")
-    host := os.Getenv("DB_HOST")
-    port := os.Getenv("DB_PORT")
-    dbname := os.Getenv("DB_NAME")
-
-    // Bentuk DSN
-    dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, host, port, dbname)
+    // Konfigurasi koneksi ke database
+	dsn := "root:MR8MPoeiVJdHcaDrsVjF@tcp(containers-us-west-150.railway.app:5616)/railway"
 
   
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
