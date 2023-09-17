@@ -51,6 +51,8 @@ func displayData(w http.ResponseWriter, r *http.Request) {
         log.Printf("Database address: %s", dsn)
 // Log waktu saat server dimulai
 	log.Printf("Server start time: %s", time.Now().Format("2006-01-02 15:04:05"))
+// Kirim jumlah pesan ke HTML menggunakan JavaScript
+fmt.Fprintf(w, `<script>document.getElementById('message-count-value').innerText = %d;</script>`, len(messages))
 
 	
 
