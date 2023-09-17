@@ -52,14 +52,7 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 // Log waktu saat server dimulai
 	log.Printf("Server start time: %s", time.Now().Format("2006-01-02 15:04:05"))
 
-	// Di dalam fungsi displayData Anda
-err = tmpl.Execute(w, len(messages))
-if err != nil {
-    http.Error(w, "Template execution error", http.StatusInternalServerError)
-    log.Println("Template execution error:", err)
-    return
-}
-
+	
 
 	// Membaca konten dari file index.html
 	tmpl, err := template.ParseFiles("index.html")
