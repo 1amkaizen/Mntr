@@ -34,7 +34,8 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 	}
 
 
-
+// Log jumlah pesan yang ditemukan di database
+	log.Printf("Jumlah pesan ditemukan: %d", len(messages))
 	
 
 	// Membaca konten dari file index.html
@@ -51,6 +52,8 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 		log.Println("Template execution error:", err)
 		return
 	}
+	// Log bahwa template telah berhasil dikirim
+	log.Println("Template successfully sent")
 }
 
 func main() {
