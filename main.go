@@ -63,6 +63,12 @@ func main() {
 		port = "8080" // Port default jika tidak ada PORT di environment variables
 	}
 	log.Printf("Server started at :%s\n", port)
+	// Log alamat database yang digunakan
+	log.Printf("Database address: %s", dsn)
+
+	// Log waktu saat server dimulai
+	log.Printf("Server start time: %s", time.Now().Format("2006-01-02 15:04:05"))
+
 	http.ListenAndServe(":"+port, nil)
 }
  
