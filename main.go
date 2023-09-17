@@ -13,6 +13,13 @@ import (
 	"github.com/1amkaizen/telegoGPT/models"
 )
 
+
+type PageData struct {
+	MessageCount int
+	Messages     []models.Messages
+}
+
+
 func displayData(w http.ResponseWriter, r *http.Request) {
 	// Baca konfigurasi dari environment variables
 	dsn := "root:5YUTSCHvx0yXwcsJUQFW@tcp(containers-us-west-139.railway.app:6522)/railway" 
@@ -46,7 +53,10 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Server start time: %s", time.Now().Format("2006-01-02 15:04:05"))
 
 	
-
+pageData := PageData{
+	MessageCount: len(messages),
+	Messages:     messages,
+}
 	// Membaca konten dari file index.html
 	tmpl, err := template.ParseFiles("index.html")
 	if err != nil {
