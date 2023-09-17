@@ -40,6 +40,11 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Client IP address: %s", r.RemoteAddr)
 // Log jumlah pesan yang ditemukan di database
 	log.Printf("Jumlah pesan ditemukan: %d", len(messages))
+// Log alamat database yang digunakan
+        log.Printf("Database address: %s", dsn)
+// Log waktu saat server dimulai
+	log.Printf("Server start time: %s", time.Now().Format("2006-01-02 15:04:05"))
+
 	
 
 	// Membaca konten dari file index.html
@@ -83,12 +88,7 @@ func main() {
 		port = "8080" // Port default jika tidak ada PORT di environment variables
 	}
 	log.Printf("Server started at :%s\n", port)
-	// Log alamat database yang digunakan
-	log.Printf("Database address: %s", dsn)
-
-	// Log waktu saat server dimulai
-	log.Printf("Server start time: %s", time.Now().Format("2006-01-02 15:04:05"))
-
+	
 	http.ListenAndServe(":"+port, nil)
 }
  
