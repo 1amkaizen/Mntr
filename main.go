@@ -33,7 +33,10 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
+// Log informasi permintaan HTTP yang masuk
+	log.Printf("Received request: %s %s", r.Method, r.URL.Path)
+// Log informasi mengenai alamat IP pengirim
+	log.Printf("Client IP address: %s", r.RemoteAddr)
 // Log jumlah pesan yang ditemukan di database
 	log.Printf("Jumlah pesan ditemukan: %d", len(messages))
 	
@@ -55,7 +58,23 @@ func displayData(w http.ResponseWriter, r *http.Request) {
 	// Log bahwa template telah berhasil dikirim
 	log.Println("Template successfully sent")
 }
+func getClientIP(r *http.Request) string {
+	// Mengekstrak alamat IP dari header X-Forwarded-For, jika tersedia
+	if xForwardedFor := r.Header.Get("X-Forwarded-For"); xForwardedFor != "" {
+		ips := strings.Split(xForwardedFor, ", ")
+		if len(ips) > 0 {
+			return ips[0]
+		}
+	}
 
+	// Jika header X-Forwarded-For tidak ada, gunakan RemoteAddr
+	remoteAddr := strings.Split(r.RemoteAddr, ":")
+	if len(remoteAddr) > 0 {
+		return remoteAddr[0]
+	}
+
+	return "unknown"
+}
 func main() {
 	http.HandleFunc("/", displayData)
 	port := os.Getenv("PORT")
